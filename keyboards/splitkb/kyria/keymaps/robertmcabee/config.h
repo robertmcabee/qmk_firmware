@@ -16,6 +16,10 @@
 
 #pragma once
 
+#ifdef OLED_ENABLE
+  #define OLED_DISPLAY_128X64
+#endif
+
 #ifdef RGBLIGHT_ENABLE
 #    define RGBLIGHT_ANIMATIONS
 #    define RGBLIGHT_HUE_STEP  8
@@ -30,3 +34,7 @@
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
 // #define SPLIT_USB_DETECT
 // #define NO_USB_STARTUP_CHECK
+
+// Allows to use either side as the master. Look at the documentation for info:
+// https://docs.qmk.fm/#/config_options?id=setting-handedness
+#define MASTER_RIGHT
