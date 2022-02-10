@@ -29,6 +29,8 @@ enum layers {
 #define ADJUST   OSL(_ADJUST)
 
 #define CMD_SPC  MT(MOD_LGUI, KC_SPACE)
+#define NAV_DEL  LT(_NAV, KC_DEL)
+#define SYM_BKS  LT(_SYM, KC_BSPC)
 
 #define ONESHOT_TAP_TOGGLE 2  /* Tapping this number of times holds the key until tapped once again. */
 #define ONESHOT_TIMEOUT 3000  /* Time (in ms) before the one shot key is released */
@@ -38,10 +40,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     [_COLEMAK_DH] = LAYOUT(
-     KC_HOME , KC_Q ,  KC_W   ,  KC_F  ,   KC_P ,   KC_B ,                                        KC_J,   KC_L ,  KC_U ,   KC_Y ,KC_SCLN, KC_EQL ,
-     KC_TAB  , KC_A ,  KC_R   ,  KC_S  ,   KC_T ,   KC_G ,                                        KC_M,   KC_N ,  KC_E ,   KC_I ,  KC_O , KC_QUOT,
-     KC_CAPS , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , KC_LOPT,KC_F13,     KC_CAPS, KC_LCTL,  KC_K,   KC_H ,KC_COMM, KC_DOT ,KC_SLSH, KC_BSLS,
-                                ADJUST , KC_LGUI, KC_BSPC, KC_LSFT, SYM  ,     NAV    , CMD_SPC,KC_DEL, KC_ENT , KC_END
+     KC_F13  , KC_Q ,  KC_W   ,  KC_F  ,   KC_P ,   KC_B ,                                        KC_J ,  KC_L ,  KC_U ,   KC_Y ,KC_SCLN, KC_EQL ,
+     KC_TAB  , KC_A ,  KC_R   ,  KC_S  ,   KC_T ,   KC_G ,                                        KC_M ,  KC_N ,  KC_E ,   KC_I ,  KC_O , KC_QUOT,
+     KC_CAPS , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , KC_LOPT, KC_CAPS,   KC_CAPS, KC_LCTL,  KC_K ,  KC_H ,KC_COMM, KC_DOT ,KC_SLSH, KC_BSLS,
+                                ADJUST , KC_LGUI, SYM_BKS, KC_LSFT, SYM  ,     NAV    , CMD_SPC,NAV_DEL, KC_ENT , KC_END
     ),
 
 
