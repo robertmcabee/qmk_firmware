@@ -1,32 +1,18 @@
-/* Copyright 2019 Thomas Baart <thomas@splitkb.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 #include QMK_KEYBOARD_H
 
 enum layers {
     _COLEMAK_DH = 0,
     _NAV,
     _SYM,
-    _ADJUST
+    _ADJUST,
+    _GAME
 };
 
-
-// Aliases for readability
+// Aliases
 #define SYM      OSL(_SYM)
 #define NAV      OSL(_NAV)
 #define ADJUST   OSL(_ADJUST)
+#define GAME     TG(_GAME)
 
 #define CMD_SPC  MT(MOD_LGUI, KC_SPACE)
 #define NAV_DEL  LT(_NAV, KC_DEL)
@@ -45,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_CAPS , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , KC_LOPT, KC_CAPS,   KC_CAPS, KC_LCTL,  KC_K ,  KC_H ,KC_COMM, KC_DOT ,KC_SLSH, KC_BSLS,
                                 ADJUST , KC_LGUI, SYM_BKS, KC_LSFT, SYM  ,     NAV    , CMD_SPC,NAV_DEL, KC_ENT , KC_END
     ),
-
+    
 
     [_NAV] = LAYOUT(
       _______, _______  , KC_F9  , KC_F10 , KC_F11 , KC_F12,                                     RSG(KC_Z), KC_BSPC, KC_UP,   KC_DEL,  KC_PGUP, _______,
@@ -58,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_SYM] = LAYOUT(
       _______, _______, KC_EXLM, KC_LCBR, KC_RCBR, KC_TILD,                                       KC_ASTR,  KC_7  ,  KC_8 , KC_9 , KC_COLN, KC_PLUS,
       _______, KC_AMPR, KC_DLR , KC_LPRN, KC_RPRN, KC_GRV ,                                       KC_MINS,  KC_4  ,  KC_5 , KC_6 , KC_HASH, KC_DQUO,
-      _______, KC_AT  , KC_PERC, KC_LBRC, KC_RBRC, KC_CIRC, _______, _______,   _______, _______, KC_UNDS,  KC_1  ,  KC_2 , KC_3 , KC_QUES, KC_PIPE,
+      _______, KC_AT  , KC_PERC, KC_LBRC, KC_RBRC, KC_CIRC,  GAME  , _______,   _______, _______, KC_UNDS,  KC_1  ,  KC_2 , KC_3 , KC_QUES, KC_PIPE,
                                  _______, _______, _______, _______, _______,   _______, _______ ,  KC_0 , _______, _______
     ),
 
@@ -68,6 +54,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, _______, _______ , _______, _______,                                      RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI,  RGB_MOD, _______,
       _______, _______, _______, _______, _______, _______,KC_VOLU, KC_BRIU,    KC_BRIU, KC_VOLU, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD, _______,
                                  _______, KC_VOLD, KC_MPRV,KC_VOLD, KC_BRID,    KC_BRID, KC_VOLD, KC_MNXT, KC_MPLY, _______
+    ),
+
+    [_GAME] = LAYOUT(
+     KC_ESC , KC_Q ,  KC_W   ,  KC_UP ,   KC_P ,   KC_B ,                                          KC_J ,  KC_L ,  KC_U ,   KC_Y ,KC_SCLN, GAME ,
+     KC_TAB , KC_A ,  KC_LEFT, KC_DOWN,KC_RIGHT,   KC_G ,                                          KC_M ,  KC_1 ,  KC_2 ,   KC_3 ,  KC_4 , KC_QUOT,
+     KC_ESC , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , KC_LSFT , KC_LGUI,    KC_CAPS, KC_LCTL,  KC_K ,  KC_5 ,  KC_6 ,   KC_7 ,  KC_8 , KC_BSLS,
+                                KC_BSLS, KC_LCTL, KC_SPACE,KC_ENT, KC_LOPT ,    KC_N   , KC_9   ,  KC_0 , KC_ENT, KC_END
     ),
 };
 
