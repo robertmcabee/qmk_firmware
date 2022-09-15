@@ -4,18 +4,18 @@ enum layers {
     _COLEMAK_DH = 0,
     _NAV,
     _SYM,
-    _ADJUST,
+    _FN,
     _GAME
 };
 
 // Aliases
-#define SYM      OSL(_SYM)
-#define NAV      OSL(_NAV)
-#define ADJUST   OSL(_ADJUST)
+#define SYM      MO(_SYM)
+#define NAV      MO(_NAV)
+#define FN       MO(_FN)
 #define GAME     TG(_GAME)
 
 #define CMD_SPC  MT(MOD_LGUI, KC_SPACE)
-#define NAV_DEL  LT(_NAV, KC_DEL)
+#define NAV_ENT  LT(_NAV, KC_ENT)
 #define SYM_BKS  LT(_SYM, KC_BSPC)
 
 #define ONESHOT_TAP_TOGGLE 2  /* Tapping this number of times holds the key until tapped once again. */
@@ -23,44 +23,54 @@ enum layers {
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+ 
+//  * ,------------------------------------------.                              ,------------------------------------------.
+//  * |   [   |  Q   |  W   |  F   |  P   |  B   |                              |  J   |  L   |  U   |  Y   | ; :  |  - _  |
+//  * |-------+------+------+------+------+------|                              |------+------+------+------+------+-------|
+//  * |       |  A   |  R   |  S   |  T   |  G   |                              |  M   |  N   |  E   |  I   |  O   |  ' "  |
+//  * |-------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+-------|
+//  * |   ]   |  Z   |  X   |  C   |  D   |  V   |      |      |  |      |      |  K   |  H   | , <  | . >  | / ?  |  \ |  |
+//  * `---------------------+------+------+------+------+------|  |------+------+------+------+------+---------------------'
+//  *                       |      |      |      |      |      |  |      |      |      |      |      |
+//  *                       |      |      |      |      |      |  |      |      |      |      |      |
+//  *                       `----------------------------------'  `----------------------------------'
 
-
-    [_COLEMAK_DH] = LAYOUT(
-     KC_F13  , KC_Q ,  KC_W   ,  KC_F  ,   KC_P ,   KC_B ,                                        KC_J ,  KC_L ,  KC_U ,   KC_Y ,KC_SCLN, KC_EQL ,
-     KC_TAB  , KC_A ,  KC_R   ,  KC_S  ,   KC_T ,   KC_G ,                                        KC_M ,  KC_N ,  KC_E ,   KC_I ,  KC_O , KC_QUOT,
-     KC_CAPS , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , KC_LOPT, KC_CAPS,   KC_CAPS, KC_LCTL,  KC_K ,  KC_H ,KC_COMM, KC_DOT ,KC_SLSH, KC_BSLS,
-                                ADJUST , KC_LGUI, SYM_BKS, KC_LSFT, SYM  ,     NAV    , CMD_SPC,NAV_DEL, KC_ENT , KC_END
+    [_COLEMAK_DH] = LAYOUT( 
+     KC_LBRC , KC_Q ,  KC_W ,  KC_F  ,  KC_P ,  KC_B ,                                        KC_J ,  KC_L   ,   KC_U ,   KC_Y , KC_SCLN, KC_MINS,
+     KC_CAPS , KC_A ,  KC_R ,  KC_S  ,  KC_T ,  KC_G ,                                        KC_M ,  KC_N   ,   KC_E ,   KC_I ,   KC_O , KC_QUOT,
+     KC_RBRC , KC_Z ,  KC_X ,  KC_C  ,  KC_D ,  KC_V , KC_LOPT, KC_F13,    KC_CAPS, KC_LCTL,  KC_K ,  KC_H   , KC_COMM, KC_DOT , KC_SLSH, KC_BSLS,
+                             KC_LGUI ,KC_BSPC,  SYM  , KC_LSFT, FN    ,    KC_TAB , CMD_SPC,NAV_ENT, KC_DEL  ,  KC_ESC 
     ),
     
 
     [_NAV] = LAYOUT(
-      _______, _______  , KC_F9  , KC_F10 , KC_F11 , KC_F12,                                     RSG(KC_Z), KC_BSPC, KC_UP,   KC_DEL,  KC_PGUP, _______,
-      _______, _______  , KC_F5  , KC_F6  , KC_F7  , KC_F8,                                      G(KC_Z), KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, _______,
-      _______, _______  , KC_F1  , KC_F2  , KC_F3  , KC_F4, _______, _______, _______, _______,  KC_F18, G(KC_X), G(KC_C), G(KC_V), _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+      _______, _______, _______,  KC_UP , _______, _______,                                       _______, _______, KC_PGUP, _______, _______, _______,
+      _______, _______, KC_LEFT, KC_DOWN,KC_RIGHT, _______,                                       _______, KC_HOME, KC_PGDN, KC_END , _______, _______,
+      _______, _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______
     ),
 
 
     [_SYM] = LAYOUT(
-      _______, _______, KC_EXLM, KC_LCBR, KC_RCBR, KC_TILD,                                       KC_ASTR,  KC_7  ,  KC_8 , KC_9 , KC_COLN, KC_PLUS,
-      _______, KC_AMPR, KC_DLR , KC_LPRN, KC_RPRN, KC_GRV ,                                       KC_MINS,  KC_4  ,  KC_5 , KC_6 , KC_HASH, KC_DQUO,
-      _______, KC_AT  , KC_PERC, KC_LBRC, KC_RBRC, KC_CIRC,  GAME  , _______,   _______, _______, KC_UNDS,  KC_1  ,  KC_2 , KC_3 , KC_QUES, KC_PIPE,
+      KC_TILD, KC_AT  , KC_HASH, KC_EXLM, KC_PERC, KC_GRV ,                                       _______,  KC_7  ,  KC_8 , KC_9 , KC_COLN, KC_UNDS,
+      _______, KC_AMPR, KC_PAST, KC_DLR , KC_LPRN, KC_RPRN,                                       _______,  KC_4  ,  KC_5 , KC_6 , KC_0   , KC_DQUO,
+      _______, KC_EQL , KC_PLUS, KC_CIRC, KC_LCBR, KC_RCBR, _______, _______,   _______, _______, _______,  KC_1  ,  KC_2 , KC_3 , KC_QUES, KC_PIPE,
                                  _______, _______, _______, _______, _______,   _______, _______ ,  KC_0 , _______, _______
     ),
 
 
-    [_ADJUST] = LAYOUT(
-      _______, _______, _______, _______ , _______, _______,                                      _______, _______, _______, _______,  _______, _______,
-      _______, _______, _______, _______ , _______, _______,                                      RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI,  RGB_MOD, _______,
-      _______, _______, _______, _______, _______, _______,KC_VOLU, KC_BRIU,    KC_BRIU, KC_VOLU, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD, _______,
-                                 _______, KC_VOLD, KC_MPRV,KC_VOLD, KC_BRID,    KC_BRID, KC_VOLD, KC_MNXT, KC_MPLY, _______
+    [_FN] = LAYOUT(
+      KC_F13 , KC_F14 , KC_F15 , KC_F16 , KC_F17 , KC_F18 ,                                        KC_F19 , KC_F20 , KC_F21 , KC_F22 , KC_F23 , KC_F24 ,
+       KC_F1 ,  KC_F2 ,  KC_F3 ,  KC_F4 ,  KC_F5 ,  KC_F6 ,                                        KC_F7  ,  KC_F8 ,  KC_F9 ,  KC_F10,  KC_F11, KC_F12 ,
+      _______, _______, _______, _______, _______, _______, GAME   , _______,    KC_BRIU, KC_VOLU, _______, _______, _______, _______, _______, _______,
+                                 _______, _______, _______, _______, _______,    KC_BRID, KC_VOLD, KC_MPRV, KC_MNXT, KC_MPLY
     ),
 
     [_GAME] = LAYOUT(
-     KC_ESC , KC_Q ,  KC_W   ,  KC_UP ,   KC_P ,   KC_B ,                                          KC_J ,  KC_L ,  KC_U ,   KC_Y ,KC_SCLN, GAME ,
-     KC_TAB , KC_A ,  KC_LEFT, KC_DOWN,KC_RIGHT,   KC_G ,                                          KC_M ,  KC_1 ,  KC_2 ,   KC_3 ,  KC_4 , KC_QUOT,
-     KC_ESC , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , KC_LSFT , KC_LGUI,    KC_CAPS, KC_LCTL,  KC_K ,  KC_5 ,  KC_6 ,   KC_7 ,  KC_8 , KC_BSLS,
-                                KC_BSLS, KC_LCTL, KC_SPACE,KC_ENT, KC_LOPT ,    KC_N   , KC_9   ,  KC_0 , KC_ENT, KC_END
+     KC_LBRC, KC_Q ,  KC_W   ,  KC_UP ,   KC_P ,   KC_B ,                                            KC_J ,   KC_L ,   KC_U ,  KC_Y  , KC_SCLN,   GAME ,
+     KC_TAB , KC_A ,  KC_LEFT, KC_DOWN,KC_RIGHT,   KC_G ,                                            KC_M ,   KC_1 ,   KC_2 ,  KC_3  ,   KC_4 , KC_QUOT,
+     KC_RBRC, KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V ,   KC_ENT, KC_ESC ,    KC_ESC  , KC_LCTL ,  KC_K ,   KC_5 ,   KC_6 ,  KC_7  ,   KC_8 , KC_BSLS,
+                                KC_BSLS, KC_LCTL, KC_SPACE,KC_LSFT, KC_LOPT,    KC_N    , KC_9    ,  KC_0 ,  KC_DEL, KC_ESC
     ),
 };
 
@@ -116,13 +126,13 @@ static void render_qmk_logo(void) {
 static void render_status(void) {
     // QMK Logo and version information
     render_qmk_logo();
-    oled_write_P(PSTR("       Kyria rev1.0\n\n"), false);
+    oled_write_P(PSTR("       Kyria rev1.4\n\n"), false);
 
     // Host Keyboard Layer Status
     oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
         case _COLEMAK_DH:
-            oled_write_P(PSTR("CMK\n"), false);
+            oled_write_P(PSTR("BASE\n"), false);
             break;
         case _NAV:
             oled_write_P(PSTR("NAV\n"), false);
@@ -130,8 +140,11 @@ static void render_status(void) {
         case _SYM:
             oled_write_P(PSTR("SYM\n"), false);
             break;
-        case _ADJUST:
-            oled_write_P(PSTR("ADJ\n"), false);
+        case _FN:
+            oled_write_P(PSTR("FN\n"), false);
+            break;
+        case _GAME:
+            oled_write_P(PSTR("GAME\n"), false);
             break;
         default:
             oled_write_P(PSTR("Undefined\n"), false);
@@ -151,5 +164,79 @@ bool oled_task_user(void) {
         render_kyria_logo();
     }
     return false;
+}
+#endif
+
+#ifdef RAW_ENABLE
+static void send_layer_via_hid(int layer) {
+    uint8_t data[RAW_EPSIZE];
+    data[0] = 1;
+    data[1] = layer;
+    raw_hid_send(data, sizeof(data));
+    return;
+}
+#endif
+
+
+#ifdef RGBLIGHT_LAYERS
+const rgblight_segment_t PROGMEM my_colemak_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 20, HSV_TEAL} );
+const rgblight_segment_t PROGMEM my_game_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 20, HSV_RED} );
+const rgblight_segment_t PROGMEM my_fn_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 20, HSV_MAGENTA} );
+const rgblight_segment_t PROGMEM my_sym_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 20, HSV_GREEN} );
+const rgblight_segment_t PROGMEM my_nav_layer[] = RGBLIGHT_LAYER_SEGMENTS( {0, 20, HSV_BLUE} );
+
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    my_colemak_layer,
+    my_nav_layer,
+    my_sym_layer,
+    my_fn_layer,
+    my_game_layer
+);
+
+void matrix_scan_keymap(void) {
+    uint8_t mods = mod_config(get_mods());
+    rgblight_set_layer_state(10, mods & MOD_MASK_SHIFT);
+    rgblight_set_layer_state(11, mods & MOD_MASK_CTRL);
+    rgblight_set_layer_state(12, mods & MOD_MASK_ALT);
+    rgblight_set_layer_state(13, mods & MOD_MASK_GUI);
+}
+#endif
+
+void keyboard_post_init_user(void) {
+    rgblight_sethsv_noeeprom(HSV_BLUE);
+    // keyboard_post_init_rgb();
+#ifdef RGBLIGHT_LAYERS
+    rgblight_layers = my_rgb_layers;
+#else
+    rgblight_sethsv_noeeprom(HSV_BLUE);
+#endif
+    /*debug_enable=true;*/
+    /*debug_matrix=true;*/
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+#ifdef RGBLIGHT_LAYERS
+    for (int i = _COLEMAK_DH; i < X_PAST; i++) {
+        rgblight_set_layer_state(i, layer_state_cmp(state, i));
+    }
+#  ifdef RAW_ENABLE
+    send_layer_via_hid(state);
+#  endif
+#endif
+    return state;
+}
+
+// #ifdef RGBLIGHT_LAYERS
+// bool led_update_user(led_t led_state) {
+//     rgblight_set_layer_state(9, led_state.caps_lock);
+//     return true;
+// }
+// #endif
+
+#ifdef RAW_ENABLE
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+    // messages from host
+    // add ability to set color
+    raw_hid_send(data, length);
 }
 #endif
